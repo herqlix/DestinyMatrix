@@ -1,35 +1,65 @@
-import { Tabs } from 'expo-router';
 import React from 'react';
-
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { Tabs } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+    <GestureHandlerRootView style={{ flex: 1 }}> 
+      <Tabs screenOptions={{ 
         headerShown: false,
-        tabBarButton: HapticTab,
+        tabBarActiveTintColor: '#FFB6C1', 
+        tabBarInactiveTintColor: '#C0C0C0',
+        tabBarStyle: { 
+          backgroundColor: '#fff', 
+          borderTopWidth: 1, 
+          borderTopColor: '#F5F5F5',
+          height: 60,
+          paddingBottom: 8
+        }
       }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tabs>
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: 'Главная',
+            tabBarIcon: ({ color }) => <Ionicons name="home" size={24} color={color} />,
+          }}
+        />
+
+        {/* Скрываем этот экран из таб-бара, так как он теперь дублирует index */}
+        <Tabs.Screen
+          name="arcana-calculate"
+          options={{
+            href: null, // Это свойство полностью убирает кнопку из нижнего меню
+          }}
+        />
+
+        <Tabs.Screen
+          name="compatibility"
+          options={{
+            title: 'Совместимость',
+            tabBarIcon: ({ color }) => (
+              <Ionicons name="heart-half-outline" size={24} color={color} />
+            ),
+          }}
+        />
+
+        <Tabs.Screen
+          name="history"
+          options={{
+            title: 'История',
+            tabBarIcon: ({ color }) => <Ionicons name="time-outline" size={24} color={color} />,
+          }}
+        />
+
+        <Tabs.Screen
+          name="profile"
+          options={{
+            title: 'Профиль',
+            tabBarIcon: ({ color }) => <Ionicons name="person" size={24} color={color} />,
+          }}
+        />
+      </Tabs>
+    </GestureHandlerRootView>
   );
 }
