@@ -26,11 +26,10 @@ export default function TabLayout() {
           }}
         />
 
-        {/* Скрываем этот экран из таб-бара, так как он теперь дублирует index */}
         <Tabs.Screen
           name="arcana-calculate"
           options={{
-            href: null, // Это свойство полностью убирает кнопку из нижнего меню
+            href: null, 
           }}
         />
 

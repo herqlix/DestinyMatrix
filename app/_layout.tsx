@@ -11,7 +11,6 @@ export default function RootLayout() {
   const segments = useSegments();
 
   useEffect(() => {
-    // onAuthStateChanged срабатывает при входе/выходе
     const unsubscribe = onAuthStateChanged(auth, (u) => {
       setUser(u);
       if (initializing) setInitializing(false);
@@ -27,20 +26,14 @@ export default function RootLayout() {
     const isLoginPage = firstSegment === 'login';
     const isIndexPage = firstSegment === 'index' || !firstSegment;
 
-    // Проверяем актуальное состояние из Firebase, а не только из стейта
-    // u?.emailVerified может быть устаревшим, поэтому мы опираемся на u
     const isVerified = user?.emailVerified;
 
-    // 1. Если пользователя нет, а он пытается зайти в закрытую зону
     if (!user && inTabsGroup) {
       router.replace('/login');
     } 
-    // 2. Если пользователь подтвержден и пытается зайти на логин — пускаем в приложение
     else if (user && isVerified && (isLoginPage || isIndexPage)) {
       router.replace('/(tabs)' as any);
     }
-    // 3. Если пользователь в системе, но почта НЕ подтверждена, и он пытается зайти в табы
-    // Мы отправляем его на логин, где он увидит наш Alert с кнопкой "Я подтвердил"
     else if (user && !isVerified && inTabsGroup) {
       router.replace('/login');
     }

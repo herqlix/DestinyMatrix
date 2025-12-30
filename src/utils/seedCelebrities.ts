@@ -1,6 +1,6 @@
 import { db } from '../config/firebase';
 import { collection, addDoc, getDocs, query, limit } from 'firebase/firestore';
-import { calculateMatrix } from './MatrixCalculation'; // Убедитесь, что путь к функции верен
+import { calculateMatrix } from './MatrixCalculation';
 
 const celebritiesData = [
   { name: "Мэрилин Монро", birthDate: "01.06.1926" },
@@ -55,18 +55,16 @@ export const seedCelebrities = async () => {
       console.log("Начинаем автоматический расчет и загрузку звезд...");
       
       for (const celeb of celebritiesData) {
-        // Конвертируем ДД.ММ.ГГГГ в формат ISO (ГГГГ-ММ-ДД) для calculateMatrix
         const [d, m, y] = celeb.birthDate.split('.');
         const isoDate = `${y}-${m}-${d}`;
         
-        // Считаем аркан именно вашей функцией
         const result = calculateMatrix(isoDate);
-        const autoArcana = result.personal.center; // Берем центр
+        const autoArcana = result.personal.center; 
 
         await addDoc(celebRef, {
           name: celeb.name,
           birthDate: celeb.birthDate,
-          mainArcana: autoArcana // Теперь это 100% совпадет с логикой приложения
+          mainArcana: autoArcana 
         });
       }
       console.log("Готово! Все звезды загружены с правильными арканами.");

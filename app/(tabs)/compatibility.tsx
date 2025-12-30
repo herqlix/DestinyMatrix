@@ -271,6 +271,7 @@ export default function CompatibilityScreen() {
                 <TextInput 
                     style={styles.input} 
                     placeholder="ДД.ММ.ГГГГ" 
+                    placeholderTextColor="#D0D0D0" 
                     value={manualDate} 
                     onChangeText={(t) => {
                         let c = t.replace(/\D/g, '');

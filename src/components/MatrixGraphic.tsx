@@ -29,7 +29,6 @@ export default function MatrixGraphic({ matrixData, onPointPress }: { matrixData
 
   const { personal, ancestral, wellbeing, spheres } = matrixData;
 
-  // Добавил key в аргументы renderNode
   const renderNode = (x: number, y: number, val: number, color: string, r = 13, fontSize = 9, isFilled = true, forceBlackText = false, key?: string) => (
     <G key={key} onPress={() => onPointPress(val)}>
       <Circle cx={x} cy={y} r={r} fill={isFilled ? color : "white"} stroke={isFilled ? color : CHAKRA.BLACK} strokeWidth="1.2" />
@@ -94,7 +93,7 @@ export default function MatrixGraphic({ matrixData, onPointPress }: { matrixData
 
           {renderAgeLabels()}
 
-          {/* ТОЧКИ РОДА с ключами */}
+          {/* точки рода с ключами */}
           {[
             {x: CENTER-D, y: CENTER-D, v: ancestral.topLeft, r: 15, k: 'atl'},
             {x: CENTER-D*K1, y: CENTER-D*K1, v: ancestral.topLeftS1, r: 10, k: 'atl1'},
@@ -110,7 +109,7 @@ export default function MatrixGraphic({ matrixData, onPointPress }: { matrixData
             {x: CENTER-D*K2, y: CENTER+D*K2, v: ancestral.bottomLeftS2, r: 10, k: 'abl2'},
           ].map((p) => renderNode(p.x, p.y, p.v, CHAKRA.BLACK, p.r, 9, false, false, p.k))}
 
-          {/* ТОЧКИ ЛИЧНОСТИ */}
+          {/* точки личности */}
           {renderNode(CENTER, CENTER-R, personal.top, CHAKRA.PURPLE, 18, 12, true, false, 'pt')}
           {renderNode(CENTER, CENTER-R*K1, personal.topS1, CHAKRA.BLUE, 13, 9, true, false, 'pt1')}
           {renderNode(CENTER, CENTER-R*K2, personal.topS2, CHAKRA.SKY, 13, 9, true, false, 'pt2')}
@@ -124,11 +123,11 @@ export default function MatrixGraphic({ matrixData, onPointPress }: { matrixData
           {renderNode(CENTER+R*K1, CENTER, personal.rightS1, CHAKRA.BLACK, 13, 9, false, false, 'pr1')}
           {renderNode(CENTER+R*K2, CENTER, personal.rightS2, CHAKRA.ORANGE, 13, 9, true, false, 'pr2')}
 
-          {/* СФЕРЫ */}
+          {/* сферы */}
           {renderNode(CENTER - R * K_SPHERE, CENTER, spheres.horizontal, CHAKRA.GREEN, 7, 6, true, false, 'sh')}
           {renderNode(CENTER, CENTER - R * K_SPHERE, spheres.vertical, CHAKRA.GREEN, 7, 6, true, false, 'sv')}
 
-          {/* УЗЛЫ НА ЛИНИИ БЛАГОПОЛУЧИЯ */}
+          {/* цзлы на линии благополучия */}
           <G key="wellbeing-group">
             {renderNode(midX, midY, wellbeing.center, CHAKRA.BLACK, 7, 6, false, false, 'wc')}
             <SvgText x={(midX+s2RightX)/2} y={(midY+CENTER)/2-10} fontSize="7" textAnchor="middle">💰</SvgText>

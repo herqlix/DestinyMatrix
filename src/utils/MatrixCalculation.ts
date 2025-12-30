@@ -10,20 +10,20 @@ const reduceArcana = (num: number): number => {
 export const calculateMatrix = (birthDate: string) => {
   const [year, month, day] = birthDate.split('-').map(Number);
 
-  // 1. Углы Личностного квадрата
+  // Углы Личностного квадрата
   const left = reduceArcana(day); 
   const top = reduceArcana(month); 
   const right = reduceArcana(year); 
   const bottom = reduceArcana(left + top + right); 
   const center = reduceArcana(left + top + right + bottom);
 
-  // 2. Углы Родового квадрата
+  // Углы Родового квадрата
   const topLeft = reduceArcana(left + top); 
   const topRight = reduceArcana(top + right); 
   const bottomRight = reduceArcana(right + bottom); 
   const bottomLeft = reduceArcana(bottom + left); 
 
-  // --- ЛОГИКА ТРОЕК ---
+
   const calcTriple = (corner: number, ctr: number) => {
     const s2 = reduceArcana(corner + ctr); 
     const s1 = reduceArcana(corner + s2);  
@@ -40,14 +40,14 @@ export const calculateMatrix = (birthDate: string) => {
   const br = calcTriple(bottomRight, center);
   const bl = calcTriple(bottomLeft, center);
 
-  // --- ЛИНИЯ БЛАГОПОЛУЧИЯ ---
+  // Линия благополучия
   const pointA = b.s2; 
   const pointB = r.s2; 
   const channelCenter = reduceArcana(pointA + pointB);
   const channelMoney = reduceArcana(channelCenter + pointB);
   const channelLove = reduceArcana(channelCenter + pointA);
 
-  // --- СФЕРЫ ЖИЗНИ (ПРЕДНАЗНАЧЕНИЯ) ---
+  // Сферы жизни
   const sphereHorizontal = reduceArcana(l.s2 + center); 
   const sphereVertical = reduceArcana(t.s2 + center);
 

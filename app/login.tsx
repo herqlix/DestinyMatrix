@@ -21,7 +21,6 @@ export default function LoginScreen() {
   const [name, setName] = useState('');
   const [birthDate, setBirthDate] = useState('');
 
-  // 1. АВТО-МАСКА ДЛЯ ДАТЫ
   const handleDateChange = (text: string) => {
     let cleaned = text.replace(/\D/g, ''); 
     let formatted = cleaned;
@@ -35,7 +34,6 @@ export default function LoginScreen() {
     setBirthDate(formatted);
   };
 
-  // 2. ПРОВЕРКА КОРРЕКТНОСТИ ДАТЫ
   const isValidDate = (dateStr: string) => {
     if (!/^\d{2}\.\d{2}\.\d{4}$/.test(dateStr)) return false;
     const [day, month, year] = dateStr.split('.').map(Number);
@@ -50,7 +48,6 @@ export default function LoginScreen() {
     );
   };
 
-  // ФУНКЦИЯ ЗАБЫЛИ ПАРОЛЬ
   const handleForgotPassword = async () => {
     if (!email) {
       Alert.alert("Внимание", "Введите Email, чтобы получить ссылку для сброса пароля.");
@@ -107,12 +104,10 @@ export default function LoginScreen() {
         );
         setIsRegistering(false); 
       } else {
-        // --- ВХОД В АККАУНТ ---
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         
-        // ВАЖНО: Принудительно обновляем данные пользователя с сервера Firebase
         await userCredential.user.reload();
-        const user = auth.currentUser; // Берем обновленный объект пользователя
+        const user = auth.currentUser;
 
         if (user && !user.emailVerified) {
           Alert.alert(
@@ -122,10 +117,9 @@ export default function LoginScreen() {
               {
                 text: "Я подтвердил",
                 onPress: async () => {
-                   await user.reload(); // Проверяем еще раз
+                   await user.reload();
                    if (auth.currentUser?.emailVerified) {
-                     // RootLayout увидит изменение и сам перенаправит в приложение
-                   } else {
+                    } else {
                      Alert.alert("Ошибка", "Статус всё еще 'не подтверждено'. Подождите пару секунд и попробуйте войти снова.");
                    }
                 }
@@ -156,19 +150,20 @@ export default function LoginScreen() {
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.inner}>
-          <Text style={styles.title}>{isRegistering ? 'Создать аккаунт' : 'С возвращением'}</Text>
+          <Text style={styles.title}>{isRegistering ? 'Создать аккаунт' : 'Добро пожаловать'}</Text>
           
           {isRegistering && (
             <>
               <View style={styles.field}>
                 <Text style={styles.label}>Имя</Text>
-                <TextInput style={styles.input} placeholder="Как вас зовут?" value={name} onChangeText={setName} />
+                <TextInput style={styles.input} placeholder="Как вас зовут?" placeholderTextColor="#D0D0D0" value={name} onChangeText={setName} />
               </View>
               <View style={styles.field}>
                 <Text style={styles.label}>Дата рождения</Text>
                 <TextInput 
                   style={styles.input} 
                   placeholder="ДД.ММ.ГГГГ" 
+                  placeholderTextColor="#D0D0D0" 
                   value={birthDate} 
                   onChangeText={handleDateChange} 
                   keyboardType="numeric"
@@ -182,7 +177,8 @@ export default function LoginScreen() {
             <Text style={styles.label}>Email</Text>
             <TextInput 
               style={styles.input} 
-              placeholder="mail@example.com" 
+              placeholder="mail@example.com"
+              placeholderTextColor="#D0D0D0" 
               value={email} 
               onChangeText={setEmail} 
               autoCapitalize="none" 
@@ -196,6 +192,7 @@ export default function LoginScreen() {
               <TextInput 
                 style={[styles.input, { flex: 1, borderBottomWidth: 0 }]} 
                 placeholder="••••••••" 
+                placeholderTextColor="#D0D0D0" 
                 secureTextEntry={!showPassword} 
                 value={password} 
                 onChangeText={setPassword} 
@@ -234,12 +231,12 @@ const styles = StyleSheet.create({
   title: { fontSize: 28, fontWeight: '200', color: '#333', textAlign: 'center', marginBottom: 40 },
   field: { marginBottom: 20 },
   label: { color: '#999', marginBottom: 5, fontSize: 12 },
-  input: { borderBottomWidth: 1, borderBottomColor: '#FFF0F5', paddingVertical: 8, fontSize: 16, color: '#333' },
+  input: { borderBottomWidth: 1, borderBottomColor: '#f8d9e4ff', paddingVertical: 8, fontSize: 16, color: '#333' },
   passwordContainer: { 
     flexDirection: 'row', 
     alignItems: 'center', 
     borderBottomWidth: 1, 
-    borderBottomColor: '#FFF0F5' 
+    borderBottomColor: '#f8d9e4ff' 
   },
   forgotBtn: { alignSelf: 'flex-end', marginTop: -10, marginBottom: 15 },
   forgotText: { color: '#FFB6C1', fontSize: 13, textDecorationLine: 'underline' },

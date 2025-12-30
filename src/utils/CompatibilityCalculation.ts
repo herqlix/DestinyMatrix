@@ -1,8 +1,5 @@
 import { calculateMatrix } from './MatrixCalculation';
 
-/**
- * Сложение арканов по правилу 22
- */
 const sumArcana = (a: number, b: number): number => {
   if (!a || !b) return a || b || 0;
   let res = a + b;
@@ -50,7 +47,7 @@ export const calculateCompatibility = (date1: string, date2: string) => {
     wellbeing: {
       money: sumArcana(m1.wellbeing.money, m2.wellbeing.money),
       love: sumArcana(m1.wellbeing.love, m2.wellbeing.love),
-      center: sumArcana(m1.wellbeing.center, m2.wellbeing.center), // Добавлено!
+      center: sumArcana(m1.wellbeing.center, m2.wellbeing.center), 
     },
     spheres: {
       horizontal: sumArcana(m1.spheres.horizontal, m2.spheres.horizontal),
